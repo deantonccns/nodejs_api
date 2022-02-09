@@ -4,6 +4,18 @@ import apis from '../apis/car'
 import { carModel, carModelValidator } from '../models/car'
 
 /** middleware */
+/** validate x-api-key in headers */
+function validateApiKey(req: Request, res: Response, next: NextFunction)
+{
+    if (!('x-api-key' in req.headers) || req.headers['x-api-key'] != '1234')
+    {
+        return res.status(404).json({
+            error: 'Authentication failed'
+        });
+    }
+    next();
+}
+
 /** validate the JSON input */
 function validateCarSchema(req: Request, res: Response, next: NextFunction)
 {
@@ -46,10 +58,10 @@ async function ensureCarNotExists(req: Request, res: Response, next: NextFunctio
 
 const router = express.Router();
 
-router.post('/car', validateCarSchema, ensureCarNotExists, apis.addCar);
-router.post('/car_update', validateCarSchema, ensureCarExists, apis.updateCar);
-router.delete('/car/:id', ensureCarExists, apis.deleteCar);
-router.get('/cars', apis.getCars);
-router.get('/car/:id', apis.getCar);
+router.post('/car', validateApiKey, validateCarSchema, ensureCarNotExists, apis.addCar);
+router.post('/car_update', validateApiKey, validateCarSchema, ensureCarExists, apis.updateCar);
+router.delete('/car/:id', validateApiKey, ensureCarExists, apis.deleteCar);
+router.get('/cars', validateApiKey, apis.getCars);
+router.get('/car/:id', validateApiKey, apis.getCar);
 
 export = router;
