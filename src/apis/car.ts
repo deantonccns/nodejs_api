@@ -1,39 +1,14 @@
 /** src/api/car.ts */
 import { Request, Response, NextFunction } from 'express'
-import { carModel, carModelValidtor } from '../models/car'
+import { carModel } from '../models/car'
 
-/** local functions */
-async function isCarExists(carId: string): Promise<boolean> {
-    const result = await carModel.findOne({id: carId});
-    return result? true: false;
-}
 
-/** add a new car */
+/** insert the car into database with the specific arguments */
 const addCar = async (req: Request, res: Response, next: NextFunction) => {
-    /** validate the input arguments */    
-    if (!carModelValidtor(req.body))
-    {
-        return res.status(404).json({
-            error: 'Invalid input arguments',
-            detail: carModelValidtor.errors
-        });
-    }
-
-    /** check whether a car with the same id exists */
-    const carId: string = req.body.id;
-    const isExist: boolean = await isCarExists(carId);
-    if (isExist)
-    {
-        return res.status(404).json({
-            error: `A car with the same id exists. id: '${carId}'`,
-        });
-    }
-
-    /** insert the car into database with the specific arguments */
     try
     {
         const newCar = new carModel({
-            id: carId,
+            id: req.body.id,
             brand: req.body.brand,
             color: req.body.color,
             model: req.body.model,
@@ -53,30 +28,11 @@ const addCar = async (req: Request, res: Response, next: NextFunction) => {
 
 /** update a existing car */
 const updateCar = async (req: Request, res: Response, next: NextFunction) => {
-    /** validate the input arguments */
-    if (!carModelValidtor(req.body))
-    {
-        return res.status(404).json({
-            error: 'Invalid input arguments',
-            detail: carModelValidtor.errors
-        });
-    }
-
-    /** check whether the car exists or not*/
-    const carId: string = req.body.id;
-    const isExist: boolean = await isCarExists(carId);
-    if (!isExist)
-    {
-        return res.status(404).json({
-            error: `A car with the id '${carId}' doesn't exist.`,
-        });
-    }
-
     /** edit the car with the specific arguments */
     try
     {     
         const result = await carModel.updateOne(
-            { "id": carId },
+            { "id": req.body.id },
             { $set: req.body }
         );
         res.status(200).json(result);
@@ -92,20 +48,10 @@ const updateCar = async (req: Request, res: Response, next: NextFunction) => {
 
 /** delete a existing car */
 const deleteCar = async (req: Request, res: Response, next: NextFunction) => {
-    const carId: string = req.params.id;
-    /** check whether the car exists or not*/
-    const isExist: boolean = await isCarExists(carId);
-    if (!isExist)
-    {
-        return res.status(404).json({
-            error: `A car with the id '${carId}' doesn't exist.`,
-        });
-    }
-
     /** delete the car from database */
     try
     {
-        const result = await carModel.deleteOne({id: carId});
+        const result = await carModel.deleteOne({id: req.params.id});
         res.status(200).json(result);
     }
     catch (error)

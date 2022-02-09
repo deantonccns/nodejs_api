@@ -1,5 +1,4 @@
 ## About The Project
----
 An application which uses the Express.JS framework to expose a RESTful API
 to manage cars. It applies the following technics:
 
@@ -9,7 +8,6 @@ to manage cars. It applies the following technics:
 * Typescript
 
 ## Getting Started
----
 ### Prerequisites
 * A linux system with Docker Container installed
 * The RESTful API server takes the port 3000 in both container and host while MongoDB takes 3000. Please make sure these 2 ports are not occupied by other applications in your system.

@@ -31,6 +31,6 @@ const CarAjvSchema: JSONSchemaType<ICar> = {
 }
 
 const carModel: Model<ICar> = model<ICar>('car', CarSchema);
-const carModelValidtor = new Ajv().compile(CarAjvSchema)
+const carModelValidator = new Ajv().compile(CarAjvSchema)
 
-export {carModel, carModelValidtor};
+export {carModel, carModelValidator};
