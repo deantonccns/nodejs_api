@@ -46,6 +46,29 @@ There are 5 APIs provided:
 * Delete a car (DELETE /car/CAR_ID)
 
 Preferably test the APIs by [Postman](https://www.postman.com/downloads/)
+or
+with *curl*
+
+1. Get all cars
+   ```sh
+   curl -i --header "x-api-key: 1234" -X GET 10.22.208.73:3000/cars
+   ```
+2. Get a specific car
+   ```sh
+   curl -i --header "x-api-key: 1234" -X POST 10.22.208.73:3000/car/CAR_ID
+   ```
+3. Add a new car
+   ```sh
+   curl -i --data "id=1234&brand=Benz&model=S1&color=black" --header "x-api-key: 1234" -X POST 10.22.208.73:3000/car
+   ```
+4. UPdate a car
+   ```sh
+   curl -i --data "id=1234&brand=Benz&model=S1&color=black" --header "x-api-key: 1234" -X POST 10.22.208.73:3000/car_update
+   ```
+5. Delete a car
+   ```sh
+   curl -i --header "x-api-key: 1234" -X DELETE 10.22.208.73:3000/car/33
+   ```
 
 ## Structure and implementation of the application
 under construciton...
