@@ -33,7 +33,7 @@ router.get('/', (req: express.Request, res: express.Response) => {
 
 /** Error handling */
 router.use((req: express.Request, res: express.Response, next) => {
-    return res.status(404).json({
+    res.status(404).json({
         error: 'route not found',
         route: req.originalUrl,
         method: req.method

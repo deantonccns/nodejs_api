@@ -70,5 +70,27 @@ with *curl*
    curl -i --header "x-api-key: 1234" -X DELETE 10.22.208.73:3000/car/33
    ```
 
+## Unit tests
+1. Build the js from ts
+   ```sh
+   npx tsc
+   ```
+2. Make sure mongo is running in the container
+   ```sh
+   docker-compose up -d mongo
+   ```
+3. Run the unit tests from host
+
+   ```sh
+   npm test -- ./build/unittests
+   ```
+4. Please be noticed, all data records will be removed from database and a set of mock data are commited before each unit test.test.
+### Test coverage
+1. Add a new car. Check the car in the database.
+2. Update a car.
+3. Delete a car. Check the car is removed from the database.
+4. Add a new car which id exists.
+5. Delete a car which doesn't exist.
+
 ## Structure and implementation of the application
 under construciton...

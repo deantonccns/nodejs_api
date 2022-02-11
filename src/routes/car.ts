@@ -9,8 +9,9 @@ function validateApiKey(req: Request, res: Response, next: NextFunction)
 {
     if (!('x-api-key' in req.headers) || req.headers['x-api-key'] != '1234')
     {
-        return res.status(404).json({
-            error: 'Authentication failed'
+        console.log(`Authentication failed.`);
+        return res.status(511).json({
+            error: 'Authentication failed.'
         });
     }
     next();
@@ -21,8 +22,9 @@ function validateCarSchema(req: Request, res: Response, next: NextFunction)
 {
     if (!carModelValidator(req.body))
     {
-        return res.status(404).json({
-            error: 'Invalid input arguments',
+        console.log(`Invalid input arguments: ${carModelValidator.errors}`);
+        return res.status(400).json({
+            error: 'Invalid input arguments.',
             detail: carModelValidator.errors
         });
     }
@@ -35,7 +37,8 @@ async function ensureCarExists(req: Request, res: Response, next: NextFunction) 
     const result = await carModel.findOne({id: carId});
     if (!result)
     {
-        return res.status(404).json({
+        console.log(`A car with the id '${carId}' doesn't exist.`);
+        return res.status(405).json({
             error: `A car with the id '${carId}' doesn't exist.`,
         });
     }
@@ -48,7 +51,8 @@ async function ensureCarNotExists(req: Request, res: Response, next: NextFunctio
     const result = await carModel.findOne({id: carId});
     if (result)
     {
-        return res.status(404).json({
+        console.log(`A car with the id '${carId}' already exists.`);
+        return res.status(405).json({
             error: `A car with the id '${carId}' already exists.`,
         });
     }
