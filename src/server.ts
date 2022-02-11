@@ -21,7 +21,7 @@ mongoose.connect(
 ).then(() => console.log('MongoDB Connected')
 ).catch(err => console.log(err));
 
-/** Routes to apis*/
+/** Routes to apis */
 router.use('/', routes);
 
 /** Routes to index page which only tells you the server is running */

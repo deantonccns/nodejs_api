@@ -25,9 +25,9 @@ beforeEach(async() => {
     /** clear all records */
     await mongoose.connection.db.dropDatabase();
     /** add mocking cars before each test */
-    await carModel.insertMany(MockCars);    
+    await carModel.insertMany(MockCars);
 });
-  
+
 
 afterEach((done) => {
     mongoose.connection.close(() => done());
@@ -35,12 +35,12 @@ afterEach((done) => {
 
 const app = express();
 app.use(express.json());
-app.use("/", routes);
+app.use('/', routes);
 
 /** Get all cars. Check the response type and length  */
-test("GET /cars", async () => {
+test('GET /cars', async () => {
     await supertest(app)
-        .get("/cars")
+        .get('/cars')
         .set({'x-api-key': X_API_KEY})
         .expect(200)
         .then((response) => {
@@ -51,7 +51,7 @@ test("GET /cars", async () => {
 
 
 /** Add a new car. Check the car in the database */
-test("POST /car", async () => {
+test('POST /car', async () => {
     const newCar = {
         id: 'K8000',
         brand: 'FERRARI',
@@ -59,9 +59,9 @@ test("POST /car", async () => {
         model: 'F8',
         capacity: 5000
     };
-  
+
     await supertest(app)
-        .post("/car")
+        .post('/car')
         .send(newCar)
         .set({'x-api-key': X_API_KEY})
         .expect(200)
@@ -72,7 +72,7 @@ test("POST /car", async () => {
             expect(response.body.color).toBe(newCar.color);
             expect(response.body.model).toBe(newCar.model);
             expect(response.body.capacity).toBe(newCar.capacity);
-      
+
             /** verify the data is actually commited */
             const theNewCar = await carModel.findOne({id: newCar.id});
             expect(theNewCar).toBeTruthy();
@@ -88,7 +88,7 @@ test("POST /car", async () => {
 });
 
 /** Update a car. */
-test("POST /car_update", async () => {
+test('POST /car_update', async () => {
     const car = {
         id: 'E5000',
         brand: 'MAZDA',
@@ -96,16 +96,16 @@ test("POST /car_update", async () => {
         model: 'CX-3',
         capacity: 1800
     };
-  
+
     await supertest(app)
-        .post("/car_update")
+        .post('/car_update')
         .send(car)
         .set({'x-api-key': X_API_KEY})
         .expect(200)
         .then(async (response) => {
             /** verify a car is updated */
             expect(response.body.nModified).toBe(1);
-      
+
             /** verify the car is actually commited */
             const theCar = await carModel.findOne({id: car.id});
             expect(theCar).toBeTruthy();
@@ -121,9 +121,9 @@ test("POST /car_update", async () => {
 });
 
 /** Delete a car. Check the car is removed from the database */
-test("DELETE /car/:id", async () => {
+test('DELETE /car/:id', async () => {
     const carId: string = 'A1000';
-  
+
     await supertest(app)
         .delete(`/car/${carId}`)
         .set({'x-api-key': X_API_KEY})
@@ -131,7 +131,7 @@ test("DELETE /car/:id", async () => {
         .then(async (response) => {
             /** verify a car is removed */
             expect(response.body.deletedCount).toBe(1);
-      
+
             /** verify the car is actually removed from database */
             const theNewCar = await carModel.findOne({id: carId});
             expect(theNewCar).toBeFalsy();
@@ -139,7 +139,7 @@ test("DELETE /car/:id", async () => {
 });
 
 /** Add a new car which id exists. */
-test("POST /car already exists", async () => {
+test('POST /car already exists', async () => {
     const newCar = {
         id: 'H5003',
         brand: 'FERRARI',
@@ -147,18 +147,18 @@ test("POST /car already exists", async () => {
         model: 'F8',
         capacity: 5000
     };
-  
+
     await supertest(app)
-        .post("/car")
+        .post('/car')
         .send(newCar)
         .set({'x-api-key': X_API_KEY})
         .expect(405);
 });
 
 /** Delete a car which doesn't exist */
-test("DELETE /car/:id doesn't exist", async () => {
+test('DELETE /car/:id doesn\'t exist', async () => {
     const carId: string = 'A1001';
-  
+
     await supertest(app)
         .delete(`/car/${carId}`)
         .set({'x-api-key': X_API_KEY})

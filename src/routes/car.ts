@@ -7,7 +7,7 @@ import { carModel, carModelValidator } from '../models/car'
 /** validate x-api-key in headers */
 function validateApiKey(req: Request, res: Response, next: NextFunction)
 {
-    if (!('x-api-key' in req.headers) || req.headers['x-api-key'] != '1234')
+    if (!('x-api-key' in req.headers) || req.headers['x-api-key'] !== '1234')
     {
         console.log(`Authentication failed.`);
         return res.status(511).json({

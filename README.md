@@ -80,9 +80,9 @@ with *curl*
    docker-compose up -d mongo
    ```
 3. Run the unit tests from host
-
+   all unit tests are located in build/unittests
    ```sh
-   npm test -- ./build/unittests
+   npm run test
    ```
 4. Please be noticed, all data records will be removed from database and a set of mock data are commited before each unit test.test.
 ### Test coverage

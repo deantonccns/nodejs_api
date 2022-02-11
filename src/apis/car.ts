@@ -23,16 +23,16 @@ const addCar = async (req: Request, res: Response, next: NextFunction) => {
             error: `Failed to add the car into database`,
             detail: error
         });
-    }    
+    }
 };
 
 /** update a existing car */
 const updateCar = async (req: Request, res: Response, next: NextFunction) => {
     /** edit the car with the specific arguments */
     try
-    {     
+    {
         const result = await carModel.updateOne(
-            { "id": req.body.id },
+            { 'id': req.body.id },
             { $set: req.body }
         );
         res.status(200).json(result);
@@ -43,7 +43,7 @@ const updateCar = async (req: Request, res: Response, next: NextFunction) => {
             error: `Failed to update the car into database`,
             detail: error
         });
-    }    
+    }
 };
 
 /** delete a existing car */
@@ -60,7 +60,7 @@ const deleteCar = async (req: Request, res: Response, next: NextFunction) => {
             error: `Failed to delete the car from database`,
             detail: error
         });
-    }    
+    }
 };
 
 /** get all cars */
@@ -72,24 +72,26 @@ const getCars = async (req: Request, res: Response, next: NextFunction) => {
     }
     catch(error)
     {
-        res.status(404).json({error: error});
+        res.status(404).json({error});
     }
 };
 
 /** get a specific car */
 const getCar = async (req: Request, res: Response, next: NextFunction) => {
     const carId: string = req.params.id;
-    
+
     try
     {
         const result = await carModel.findOne({id: carId});
         if (result)
+        {
             return res.status(200).json(result);
+        }
         res.status(404).json({error: `Can't find the car with id: '${carId}'`});
     }
     catch(error)
     {
-        res.status(404).json({error: error});
+        res.status(404).json({error});
     };
 };
 

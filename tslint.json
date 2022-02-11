@@ -1,0 +1,23 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "quotemark": [true, "single"],
+        "prefer-conditional-expression": [true, "check-else-if"],
+        "curly": true,
+        "no-magic-numbers": false,
+        "encoding": true,
+        "newline-per-chained-call": false,
+        "unnecessary-else": true,
+        "no-console": false,
+        "align": [true, "parameters", "statements"],
+        "eofline": true,
+        "indent": [true, "spaces", 4],
+        "no-trailing-whitespace": true,
+        "completed-docs": [true, "enums", "functions", "methods"]
+    },
+    "rulesDirectory": []
+}

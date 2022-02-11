@@ -18,13 +18,13 @@ const CarSchema: Schema<ICar> = new Schema<ICar>({
 });
 
 const CarAjvSchema: JSONSchemaType<ICar> = {
-    type: "object",
+    type: 'object',
     properties: {
-        id: { type: "string"},
-        brand: { type: "string"},
-        color: { type: "string"},
-        model: { type: "string"},
-        capacity: { type: "integer"}
+        id: { type: 'string'},
+        brand: { type: 'string'},
+        color: { type: 'string'},
+        model: { type: 'string'},
+        capacity: { type: 'integer'}
     },
     required: ['id'],
     additionalProperties: false
