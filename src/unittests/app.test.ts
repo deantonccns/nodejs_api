@@ -38,7 +38,7 @@ app.use(express.json());
 app.use('/', routes);
 
 /** Get all cars. Check the response type and length  */
-test('GET /cars', async () => {
+test('Get all cars', async () => {
     await supertest(app)
         .get('/cars')
         .set({'x-api-key': X_API_KEY})
@@ -51,7 +51,7 @@ test('GET /cars', async () => {
 
 
 /** Add a new car. Check the car in the database */
-test('POST /car', async () => {
+test('Add a new car', async () => {
     const newCar = {
         id: 'K8000',
         brand: 'FERRARI',
@@ -88,7 +88,7 @@ test('POST /car', async () => {
 });
 
 /** Update a car. */
-test('POST /car_update', async () => {
+test('Update a car', async () => {
     const car = {
         id: 'E5000',
         brand: 'MAZDA',
@@ -121,7 +121,7 @@ test('POST /car_update', async () => {
 });
 
 /** Delete a car. Check the car is removed from the database */
-test('DELETE /car/:id', async () => {
+test('Delete a car', async () => {
     const carId: string = 'A1000';
 
     await supertest(app)
@@ -139,7 +139,7 @@ test('DELETE /car/:id', async () => {
 });
 
 /** Add a new car which id exists. */
-test('POST /car already exists', async () => {
+test('Add a existing car', async () => {
     const newCar = {
         id: 'H5003',
         brand: 'FERRARI',
@@ -156,7 +156,7 @@ test('POST /car already exists', async () => {
 });
 
 /** Delete a car which doesn't exist */
-test('DELETE /car/:id doesn\'t exist', async () => {
+test('Delete a non existing car', async () => {
     const carId: string = 'A1001';
 
     await supertest(app)
