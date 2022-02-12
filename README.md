@@ -51,29 +51,30 @@ with *curl*
 
 1. Get all cars
    ```sh
-   curl -i --header "x-api-key: 1234" -X GET 10.22.208.73:3000/cars
+   curl -i --header "x-api-key: 1234" -X GET YOUR_HOST_IP:3000/cars
    ```
 2. Get a specific car
    ```sh
-   curl -i --header "x-api-key: 1234" -X POST 10.22.208.73:3000/car/CAR_ID
+   curl -i --header "x-api-key: 1234" -X POST YOUR_HOST_IP:3000/car/CAR_ID
    ```
 3. Add a new car
    ```sh
-   curl -i --data "id=1234&brand=Benz&model=S1&color=black" --header "x-api-key: 1234" -X POST 10.22.208.73:3000/car
+   curl -i --data "id=1234&brand=Benz&model=S1&color=black" --header "x-api-key: 1234" -X POST YOUR_HOST_IP:3000/car
    ```
 4. UPdate a car
    ```sh
-   curl -i --data "id=1234&brand=Benz&model=S1&color=black" --header "x-api-key: 1234" -X POST 10.22.208.73:3000/car_update
+   curl -i --data "id=1234&brand=Benz&model=S1&color=black" --header "x-api-key: 1234" -X POST YOUR_HOST_IP:3000/car_update
    ```
 5. Delete a car
    ```sh
-   curl -i --header "x-api-key: 1234" -X DELETE 10.22.208.73:3000/car/33
+   curl -i --header "x-api-key: 1234" -X DELETE YOUR_HOST_IP:3000/car/33
    ```
 
 ## Unit tests
+*The unittests are running in host machine.
 1. Build the js from ts
    ```sh
-   npx tsc
+   npm run build
    ```
 2. Make sure mongo is running in the container
    ```sh
@@ -92,5 +93,8 @@ with *curl*
 4. Add a new car which id exists.
 5. Delete a car which doesn't exist.
 
-## Structure and implementation of the application
-under construciton...
+## TSLint
+The project has a configuration for TSLint. You can check the ts code via the command
+   ```sh
+   npm run lint
+   ```
