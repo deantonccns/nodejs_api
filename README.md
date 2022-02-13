@@ -92,6 +92,8 @@ with *curl*
 3. Delete a car. Check the car is removed from the database.
 4. Add a new car which id exists.
 5. Delete a car which doesn't exist.
+6. Use a API without setting x-api-key
+7. Invalid input data (JSON)
 
 ## TSLint
 The project has a configuration for TSLint. You can check the ts code via the command
