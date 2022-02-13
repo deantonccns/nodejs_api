@@ -152,7 +152,12 @@ test('Add a existing car', async () => {
         .post('/car')
         .send(newCar)
         .set({'x-api-key': X_API_KEY})
-        .expect(405);
+        .expect(200)
+        .then(async (response) => {
+            /** verify the error message */
+            expect(response.body.error).toBe(`A car with the id '${newCar.id}' already exists.`);
+            expect(response.body.err_code).toBe(-4);
+        });
 });
 
 /** Delete a car which doesn't exist */
@@ -162,5 +167,43 @@ test('Delete a non existing car', async () => {
     await supertest(app)
         .delete(`/car/${carId}`)
         .set({'x-api-key': X_API_KEY})
-        .expect(405);
+        .expect(200)
+        .then(async (response) => {
+            /** verify the error message */
+            expect(response.body.error).toBe(`A car with the id '${carId}' doesn\'t exist.`);
+            expect(response.body.err_code).toBe(-3);
+        });
+});
+
+/** Use a API without setting x-api-key */
+test('Use a API without setting x-api-key', async () => {
+    await supertest(app)
+        .get('/cars')
+        .expect(200)
+        .then(async (response) => {
+            /** verify the error message */
+            expect(response.body.error).toBe('Authentication failed.');
+            expect(response.body.err_code).toBe(-1);
+        });
+});
+
+/** Invalid input data (JSON) */
+test('Update a car without specifying car id', async () => {
+    const car = {
+        brand: 'MAZDA',
+        color: 'blue',
+        model: 'CX-3',
+        capacity: 1800
+    };
+
+    await supertest(app)
+        .post('/car_update')
+        .send(car)
+        .set({'x-api-key': X_API_KEY})
+        .expect(200)
+        .then(async (response) => {
+            /** verify the error message */
+            expect(response.body.error).toBe('Invalid input arguments.');
+            expect(response.body.err_code).toBe(-2);
+        });
 });
