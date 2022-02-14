@@ -187,12 +187,34 @@ test('Use a API without setting x-api-key', async () => {
         });
 });
 
-/** Invalid input data (JSON) */
+/** No id is given when updating a car */
 test('Update a car without specifying car id', async () => {
     const car = {
         brand: 'MAZDA',
         color: 'blue',
         model: 'CX-3',
+        capacity: 1800
+    };
+
+    await supertest(app)
+        .post('/car_update')
+        .send(car)
+        .set({'x-api-key': X_API_KEY})
+        .expect(200)
+        .then(async (response) => {
+            /** verify the error message */
+            expect(response.body.error).toBe('Invalid input arguments.');
+            expect(response.body.err_code).toBe(-2);
+        });
+});
+
+/** A invalid property is given when updating a car */
+test('Update a car without specifying car id', async () => {
+    const car = {
+        id: 'E5000',
+        brand: 'MAZDA',
+        color: 'blue',
+        weird_property: 'CX-3',
         capacity: 1800
     };
 

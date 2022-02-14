@@ -23,7 +23,7 @@ function validateCarSchema(req: Request, res: Response, next: NextFunction)
 {
     if (!carModelValidator(req.body))
     {
-        console.log(`Invalid input arguments: ${carModelValidator.errors}`);
+        console.log('Invalid input arguments: %j', carModelValidator.errors);
         return res.status(200).json({
             error: 'Invalid input arguments.',
             err_code: -2,
